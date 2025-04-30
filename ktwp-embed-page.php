@@ -23,25 +23,19 @@
 
 
 
-//  prevent stripping of /embed/ and embed parameters on redirects
-function preserve_embed_parts($redirect_url, $requested_url) {
-    if ((strpos($requested_url, '/embed/') !== false || 
-         isset($_GET['embed'])) && 
+/*  prevent stripping of /embed/ and embed parameters on redirects - this was updated 2025apr29 because /embed/?p=1234&embedParam1&embedParam2 was broken. I have the previous version archived locally. */
+function preserve_embed_parts($redirect_url) {
+    $requested_url = $_SERVER['REQUEST_URI'];
+    
+    if ((strpos($requested_url, '/embed/') !== false || isset($_GET['embed'])) && 
         $redirect_url !== $requested_url) {
         
-        // If original had /embed/, add it to redirect
-        if (strpos($requested_url, '/embed/') !== false && strpos($redirect_url, '/embed/') === false) {
-            return rtrim($redirect_url, '/') . '/embed/';
-        }
-        
-        // If original had ?embed or &embed, add it to redirect
-        if (isset($_GET['embed']) && strpos($redirect_url, 'embed') === false) {
-            $separator = (strpos($redirect_url, '?') !== false) ? '&' : '?';
-            return $redirect_url . $separator . 'embed';
-        }
+        $separator = (strpos($redirect_url, '?') !== false) ? '&' : '?';
+        return $redirect_url . $separator . 'embed';
     }
     return $redirect_url;
 }
+
 add_filter('redirect_canonical', 'preserve_embed_parts', 10, 2);
 
 // Apply template for embed patterns
