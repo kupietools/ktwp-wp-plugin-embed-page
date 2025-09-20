@@ -49,7 +49,7 @@ A WordPress plugin that enables clean, embeddable versions of your content throu
 - `https://yourdomain.com/your-post/?embed&title&byline`
 - `https://yourdomain.com/your-post/embed/?text`
 - `https://yourdomain.com/embed/?p=1234&title&text`
-- `https://yourdomain.com/?p=1234&embed&title&text`
+- `https://yourdomain.com/?p=1234&embed&title&tags`
 
 ## Installation
 
